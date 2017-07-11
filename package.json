@@ -6,9 +6,19 @@
   "license": "MIT",
   "dependencies": {
     "autobahn": "^17.5.2",
+    "cors": "^2.8.3",
+    "koa": "^2.3.0",
     "moment": "^2.18.1"
   },
   "scripts": {
     "start": "node index.js"
+  },
+  "devDependencies": {
+    "babel": "^6.23.0",
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.0",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-async-to-generator": "^6.24.1",
+    "babel-plugin-transform-class-properties": "^6.24.1"
   }
 }

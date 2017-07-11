@@ -1,11 +1,15 @@
 
 const
   autobahn = require('autobahn'),
-  moment = require('moment')
+  moment   = require('moment'),
+  koa      = require('koa')
 
 // main
 // ---------
-const cx = new autobahn.Connection({ url: "wss://api.poloniex.com", realm: "realm1" })
+const
+  cx  = new autobahn.Connection({ url: "wss://api.poloniex.com", realm: "realm1" }),
+  koa = koa()
+
 // cx.onopen = function(s) { s.subscribe('ticker', function(market, ev) { console.log(market) }) };
 cx.onopen = function(s) { s.subscribe('ticker', showFn('BTC_ETH')) }
 cx.open()
