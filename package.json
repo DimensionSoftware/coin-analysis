@@ -1,0 +1,14 @@
+{
+  "name": "coin-analysis",
+  "version": "0.0.1",
+  "description": "Coin Marketplace Analysis",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "autobahn": "^17.5.2",
+    "moment": "^2.18.1"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}
