@@ -7,6 +7,7 @@
   "dependencies": {
     "autobahn": "^17.5.2",
     "cors": "^2.8.3",
+    "influx": "^5.0.7",
     "koa": "^2.3.0",
     "moment": "^2.18.1"
   },
