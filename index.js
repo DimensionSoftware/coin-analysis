@@ -55,7 +55,7 @@ function record(ticker, ev) {
     isFrozen:      ticker[7]
   }
   console.log(f);
-  influx.writePoint([
+  influx.writePoints([
     {
       measurement: 'poloniex_ticker',
       tags: { exchange: 'poloniex' },
