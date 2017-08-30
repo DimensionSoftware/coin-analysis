@@ -6,7 +6,7 @@ const bittrex  = require('./lib/exchange/bittrex')
 
 const token = process.env.TOKEN
 
-(async function() {
+;(async function() {
   let b  = await bittrex.rest.init()
   let b2 = await bittrex.rest.start(b)
 })()
