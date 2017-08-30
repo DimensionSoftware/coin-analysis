@@ -1154,6 +1154,10 @@ koa@^2.3.0:
     type-is "^1.5.5"
     vary "^1.0.0"
 
+lazy.js@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/lazy.js/-/lazy.js-0.5.0.tgz#d8a02be135806fcbbcd7999513d8b6faf9857550"
+
 loader-utils@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/loader-utils/-/loader-utils-1.1.0.tgz#c98aef488bcceda2ffb5e2de646d6a754429f5cd"
