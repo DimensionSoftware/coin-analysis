@@ -12,6 +12,7 @@ global.Lazy     = require('lazy.js')
 global.Influx   = require('influx')
 global.moment   = require('moment')
 
+global.h        = require('./lib/helpers')
 global.helpers  = require('./lib/helpers')
 global.bittrex  = require('./lib/exchange/bittrex')
 global.poloniex = require('./lib/exchange/poloniex')
