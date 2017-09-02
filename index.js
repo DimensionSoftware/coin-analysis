@@ -9,7 +9,8 @@ const token = process.env.TOKEN
 
 ;(async function() {
   let b   = await bittrex.rest.init()
-  let bot = new Bot({ events: b.events })
+  let bot = new Bot({ token, events: b.events })
+  let c   = await bot.connect()
   let b2  = await bittrex.rest.start(b)
 })()
 
