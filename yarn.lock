@@ -1761,6 +1761,16 @@ supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"
 
+ta-lib.ema@*:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/ta-lib.ema/-/ta-lib.ema-0.0.4.tgz#9a7eb432cbf7ca8cb78103b484190c63c89f66c1"
+
+ta-lib.macd@^0.0.4:
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/ta-lib.macd/-/ta-lib.macd-0.0.4.tgz#0ef6af4de4125ca7aaa9ea960a8753378105bfd1"
+  dependencies:
+    ta-lib.ema "*"
+
 tar-fs@^1.13.0:
   version "1.15.3"
   resolved "https://registry.yarnpkg.com/tar-fs/-/tar-fs-1.15.3.tgz#eccf935e941493d8151028e636e51ce4c3ca7f20"
