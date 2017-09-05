@@ -12,6 +12,7 @@ global.Lazy     = require('lazy.js')
 global.Influx   = require('influx')
 global.moment   = require('moment')
 global.sprintf  = require('sprintf')
+global.winston  = require('winston')
 
 global.h        = require('./lib/helpers')
 global.helpers  = require('./lib/helpers')
