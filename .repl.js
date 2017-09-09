@@ -14,8 +14,9 @@ global.moment   = require('moment')
 global.sprintf  = require('sprintf')
 global.winston  = require('winston')
 
-global.h        = require('./lib/helpers')
 global.helpers  = require('./lib/helpers')
+global.h        = helpers
+global.hp       = helpers.percentChange
 global.bittrex  = require('./lib/exchange/bittrex')
 global.poloniex = require('./lib/exchange/poloniex')
 global.analysis = require('./lib/analysis')
