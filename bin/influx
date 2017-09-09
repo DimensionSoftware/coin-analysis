@@ -1,0 +1,3 @@
+#!/bin/sh
+
+influx -database ${COINS_DB:-coins} -precision rfc3339
