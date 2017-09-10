@@ -14,6 +14,8 @@ global.moment   = require('moment')
 global.sprintf  = require('sprintf')
 global.winston  = require('winston')
 
+global.immutable = require('immutable')
+
 global.helpers  = require('./lib/helpers')
 global.h        = helpers
 global.hp       = helpers.percentChange
