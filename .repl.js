@@ -13,6 +13,7 @@ global.Influx   = require('influx')
 global.moment   = require('moment')
 global.sprintf  = require('sprintf')
 global.winston  = require('winston')
+global.outdent  = require('outdent')
 
 global.immutable = require('immutable')
 
