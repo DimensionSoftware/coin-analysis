@@ -24,3 +24,5 @@ global.bittrex  = require('./lib/exchange/bittrex')
 global.poloniex = require('./lib/exchange/poloniex')
 global.analysis = require('./lib/analysis')
 global.Bot      = require('./lib/bot')
+
+global.bot = new Bot()
