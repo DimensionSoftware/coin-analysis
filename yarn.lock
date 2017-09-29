@@ -1266,7 +1266,7 @@ ms@2.0.0:
     int64-buffer "^0.1.9"
     isarray "^1.0.0"
 
-nan@^2.3.0, nan@^2.3.3, nan@~2.6.0:
+nan@^2.3.0, nan@^2.3.3, nan@^2.5.0, nan@~2.6.0:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.6.2.tgz#e4ff34e6c95fdfb5aecc08de6596f43605a7db45"
 
@@ -1778,6 +1778,12 @@ ta-lib.macd@^0.0.4:
   resolved "https://registry.yarnpkg.com/ta-lib.macd/-/ta-lib.macd-0.0.4.tgz#0ef6af4de4125ca7aaa9ea960a8753378105bfd1"
   dependencies:
     ta-lib.ema "*"
+
+talib@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/talib/-/talib-1.0.3.tgz#eb0a7e3f5301b323b0af02fb338d431d2b9b735a"
+  dependencies:
+    nan "^2.5.0"
 
 tar-fs@^1.13.0:
   version "1.15.3"
