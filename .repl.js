@@ -14,14 +14,14 @@ global.moment   = require('moment')
 global.sprintf  = require('sprintf')
 global.winston  = require('winston')
 global.outdent  = require('outdent')
+global.talib    = require('talib')
 
 global.immutable = require('immutable')
 
 global.helpers  = require('./lib/helpers')
 global.h        = helpers
 global.hp       = helpers.percentChange
-global.bittrex  = require('./lib/exchange/bittrex')
-global.poloniex = require('./lib/exchange/poloniex')
+global.exchange = require('./lib/exchange')
 global.analysis = require('./lib/analysis')
 global.Bot      = require('./lib/bot')
 global.db       = require('./lib/db')
