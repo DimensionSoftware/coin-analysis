@@ -1,7 +1,7 @@
 const Koa = require('koa')
 const koa = new Koa()
 
-const {poloniex, bittrex} = require('./lib/exchange')
+const {poloniex, bittrex} = require('./lib/ex')
 const Bot   = require('./lib/bot')
 const token = process.env.TOKEN
 
