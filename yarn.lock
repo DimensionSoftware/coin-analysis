@@ -1767,6 +1767,12 @@ tar@^2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
+technicalindicators@^1.0.20:
+  version "1.0.20"
+  resolved "https://registry.yarnpkg.com/technicalindicators/-/technicalindicators-1.0.20.tgz#47fd253b6eeb61bb1f562a185eb7aded04fe45df"
+  dependencies:
+    babel-polyfill "^6.23.0"
+
 to-fast-properties@^1.0.1:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/to-fast-properties/-/to-fast-properties-1.0.3.tgz#b83571fa4d8c25b82e231b06e3a3055de4ca1a47"
