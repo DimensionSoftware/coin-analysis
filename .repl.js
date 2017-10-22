@@ -18,6 +18,7 @@ global.talib    = require('talib')
 
 global.immutable = require('immutable')
 
+global.fsm      = require('./lib/fsm')
 global.helpers  = require('./lib/helpers')
 global.h        = helpers
 global.hp       = helpers.percentChange
