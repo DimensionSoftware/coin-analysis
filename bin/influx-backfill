@@ -40,7 +40,7 @@ if (!d.backfill) {
 (async function(){
   try {
     let end = await d.backfill({ currencyPair, logger })
-    console.log(end)
+    console.warn(end)
   }
   catch (e) {
     console.warn(e)
