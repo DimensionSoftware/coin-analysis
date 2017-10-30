@@ -1,0 +1,48 @@
+#!/usr/bin/env node
+// -*- mode: js2; -*-
+
+const
+commander = require('commander'),
+moment    = require('moment'),
+Influx    = require('influx'),
+outdent   = require('outdent'),
+db        = require('../lib/db'),
+ex        = require('../lib/ex'),
+h         = require('../lib/helpers')
+
+// find missing data from a series, download it, and insert it into the database
+
+
+function id(v) { return v }
+
+function logger(log) {
+  console.log(JSON.stringify(log))
+}
+
+commander
+  .option('-x, --exchange [name]', 'exchange to fill', id, 'bittrex')
+  .option('-c, --currency [pair]', 'Currency pair to fill')
+  .parse(process.argv)
+
+let currencyPair = commander.currency;
+let d = db[commander.exchange]
+
+if (!currencyPair) {
+  console.error("--currency <pair> is required");
+  process.exit(1)
+}
+
+if (!d.backfill) {
+  console.error(`Exchange "${commander.exchange}" does not support backfilling.`)
+  process.exit(1)
+}
+
+(async function(){
+  try {
+    let end = await d.backfill({ currencyPair, logger })
+    console.log(end)
+  }
+  catch (e) {
+    console.warn(e)
+  }
+})()
