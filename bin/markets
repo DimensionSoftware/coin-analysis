@@ -1,0 +1,34 @@
+#!/usr/bin/env node
+// -*- mode: js2; -*-
+
+const
+commander = require('commander'),
+ex        = require('../lib/ex')
+
+function id(v) { return v }
+
+commander
+  .option('-x, --exchange [name]', 'exchange to fill', id, 'bittrex')
+  .parse(process.argv)
+
+let _ex = ex[commander.exchange]
+if (!ex) {
+  console.warn(`Exchange ${commander.exchange} is not supported.`)
+  process.exit(1)
+}
+
+let e   = _ex.rest
+if (!e) {
+  console.warn(`Exchange ${commander.exchange} does not have a usable REST client`)
+  process.exit(2)
+}
+
+(async function(){
+  let res = await e.getMarkets()
+  if (res.success) {
+    let markets = res.result
+    markets.forEach((m) => {
+      console.log(m.MarketName)
+    })
+  }
+})()
