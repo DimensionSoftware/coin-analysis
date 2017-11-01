@@ -1,0 +1,75 @@
+#!/usr/bin/env node
+// -*- mode: js2; -*-
+
+const
+commander = require('commander'),
+moment    = require('moment'),
+sprintf   = require('sprintf'),
+strategy  = require('../lib/strategy'),
+db        = require('../lib/db'),
+h         = require('../lib/helpers')
+
+function id(v) { return v }
+
+commander
+  .option('-x, --exchange <name>', 'exchange to fill', id, 'bittrex')
+  .option('-c, --currency <pair>', 'currency pair to fill')
+  .option('-s, --strategy <name>', 'trading strategy to use', id, 'Example')
+  .option('-f, --fee <percentage>', 'fee for trades as a percentage', Number.parseFloat, 0.25)
+  .option('-d, --date <date>', 'date and time to start trading', id, '2017-09-15T00:00:00-07')
+  .parse(process.argv)
+
+if (!commander.currency) {
+  console.warn('--currency <pair> is required')
+  process.exit(1)
+}
+
+let StrategyClass = strategy[commander.strategy]
+let startDate     = moment(commander.date)
+let currencyPair  = commander.currency
+let s             = new StrategyClass({})
+let d             = db[commander.exchange]
+let fee           = commander.fee
+
+let [baseCurrency, currency] = currencyPair.split('-')
+let wallet           = {}
+wallet[baseCurrency] = 1.0
+wallet[currency]     = 0
+
+console.log(h.influxTime(startDate), sprintf("%8s", 'begin'), wallet)
+
+;(async function(){
+  // let the strategy initialize itself
+  let r0 = await s.init({ startDate, currencyPair })
+
+  // load price data with timestamps as { close, time }
+  let prices = await d.prices(currencyPair, startDate, moment())
+
+  let newWallet = prices.reduce((w, p) => {
+    let price   = p.close
+    let time    = p.time
+    let action  = s.action(p, time)
+    if (action) {
+      let amount = action.amount
+
+      // This is a bit too idealistic.
+      // In actual trading, the actual buyPrice may end up higher, and the sellPrice may end up lower.
+      // This is good enough for a simulation though.
+      if (action.method === 'buy') {
+        let buyPrice      = amount * price + (amount * price * fee)
+        w[baseCurrency]  -= buyPrice
+        w[currency]      += amount
+      } else if (action.method == 'sell') {
+        let sellPrice     = amount * price - (amount * price * fee)
+        w[baseCurrency]  += sellPrice
+        w[currency]      -= amount
+      }
+
+      console.log(time, sprintf("%8s", action.method), w, action)
+    }
+    return w
+  }, wallet)
+
+  let lastTime = prices[prices.length - 1].time
+  console.log(h.influxTime(lastTime), sprintf("%8s", 'end'), newWallet)
+})()
