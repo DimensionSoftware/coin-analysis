@@ -36,7 +36,7 @@ let wallet           = {}
 wallet[baseCurrency] = 1.0
 wallet[currency]     = 0
 
-console.log(h.influxTime(startDate), sprintf("%8s", 'begin'), wallet)
+console.log(startDate.format(), sprintf("%8s", 'begin'), wallet)
 
 ;(async function(){
   // let the strategy initialize itself
@@ -47,7 +47,7 @@ console.log(h.influxTime(startDate), sprintf("%8s", 'begin'), wallet)
 
   let newWallet = prices.reduce((w, p) => {
     let price   = p.close
-    let time    = p.time
+    let time    = moment(p.time)
     let action  = s.action(p, time)
     if (action) {
       let amount = action.amount
@@ -65,11 +65,11 @@ console.log(h.influxTime(startDate), sprintf("%8s", 'begin'), wallet)
         w[currency]      -= amount
       }
 
-      console.log(time, sprintf("%8s", action.method), w, action)
+      console.log(time.format(), sprintf("%8s", action.method), w, action)
     }
     return w
   }, wallet)
 
-  let lastTime = prices[prices.length - 1].time
-  console.log(h.influxTime(lastTime), sprintf("%8s", 'end'), newWallet)
+  let lastTime = moment(prices[prices.length - 1].time)
+  console.log(lastTime.format(), sprintf("%8s", 'end'), newWallet)
 })()
