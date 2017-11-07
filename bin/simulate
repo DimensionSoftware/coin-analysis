@@ -43,37 +43,41 @@ wallet[currency]     = 0
 console.log(ts(startTime), sprintf("%8s", 'begin'), wallet)
 
 ;(async function(){
-  // let the strategy initialize itself
-  let r0 = await s.init({ startTime, currencyPair, exchange })
+  try {
+    // let the strategy initialize itself
+    let r0 = await s.init({ startTime, currencyPair, exchange })
 
-  // load price data with timestamps as { close, time }
-  let prices = await d.prices(currencyPair, startTime, endTime)
+    // load price data with timestamps as { close, time }
+    let prices = await d.prices(currencyPair, startTime, endTime)
 
-  let newWallet = prices.reduce((w, p) => {
-    let price   = p.close
-    let time    = moment(p.time)
-    let action  = s.action(p.close, time)
-    if (action) {
-      let amount = action.amount
+    let newWallet = prices.reduce((w, p) => {
+      let price   = p.close
+      let time    = moment(p.time)
+      let action  = s.action(p.close, time)
+      if (action) {
+        let amount = action.amount
 
-      // This is a bit too idealistic.
-      // In actual trading, the actual buyPrice may end up higher, and the sellPrice may end up lower.
-      // This is good enough for a simulation though.
-      if (action.method === 'buy') {
-        let buyPrice      = amount * price + (amount * price * fee)
-        w[baseCurrency]  -= buyPrice
-        w[currency]      += amount
-      } else if (action.method === 'sell') {
-        let sellPrice     = amount * price - (amount * price * fee)
-        w[baseCurrency]  += sellPrice
-        w[currency]      -= amount
+        // This is a bit too idealistic.
+        // In actual trading, the actual buyPrice may end up higher, and the sellPrice may end up lower.
+        // This is good enough for a simulation though.
+        if (action.method === 'buy') {
+          let buyPrice      = amount * price + (amount * price * fee)
+          w[baseCurrency]  -= buyPrice
+          w[currency]      += amount
+        } else if (action.method === 'sell') {
+          let sellPrice     = amount * price - (amount * price * fee)
+          w[baseCurrency]  += sellPrice
+          w[currency]      -= amount
+        }
+
+        console.log(ts(time), sprintf("%8s", action.method), w, action)
       }
+      return w
+    }, wallet)
 
-      console.log(ts(time), sprintf("%8s", action.method), w, action)
-    }
-    return w
-  }, wallet)
-
-  let lastTime = moment(prices[prices.length - 1].time)
-  console.log(ts(lastTime), sprintf("%8s", 'end'), newWallet)
+    let lastTime = moment(prices[prices.length - 1].time)
+    console.log(ts(lastTime), sprintf("%8s", 'end'), newWallet)
+  } catch (e) {
+    console.warn(e)
+  }
 })()
