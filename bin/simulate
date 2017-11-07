@@ -15,7 +15,7 @@ commander
   .option('-x, --exchange <name>', 'exchange to fill', id, 'bittrex')
   .option('-c, --currency <pair>', 'currency pair to fill')
   .option('-s, --strategy <name>', 'trading strategy to use', id, 'Example')
-  .option('-f, --fee <percentage>', 'fee for trades as a percentage', Number.parseFloat, 0.25)
+  .option('-f, --fee <percentage>', 'fee for trades as a percentage', Number.parseFloat, 0.0025)
   .option('-d, --date <date>', 'date and time to start trading', id, '2017-09-15T00:00:00-07')
   .parse(process.argv)
 
@@ -30,6 +30,7 @@ let currencyPair  = commander.currency
 let s             = new StrategyClass({})
 let d             = db[commander.exchange]
 let fee           = commander.fee
+let exchange      = commander.exchange
 
 let [baseCurrency, currency] = currencyPair.split('-')
 let wallet           = {}
@@ -40,7 +41,7 @@ console.log(startDate.format(), sprintf("%8s", 'begin'), wallet)
 
 ;(async function(){
   // let the strategy initialize itself
-  let r0 = await s.init({ startDate, currencyPair })
+  let r0 = await s.init({ startDate, currencyPair, exchange })
 
   // load price data with timestamps as { close, time }
   let prices = await d.prices(currencyPair, startDate, moment())
@@ -48,7 +49,7 @@ console.log(startDate.format(), sprintf("%8s", 'begin'), wallet)
   let newWallet = prices.reduce((w, p) => {
     let price   = p.close
     let time    = moment(p.time)
-    let action  = s.action(p, time)
+    let action  = s.action(p.close, time)
     if (action) {
       let amount = action.amount
 
