@@ -33,7 +33,6 @@ let currencyPair  = commander.currency
 let s             = new StrategyClass({})
 let d             = db[commander.exchange]
 let fee           = commander.fee
-let exchange      = commander.exchange
 let ts            = commander.utc ? ((m) => moment(m).utc().format()) : ((m) => moment(m).format())
 
 let [baseCurrency, currency] = currencyPair.split('-')
