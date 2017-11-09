@@ -4,7 +4,7 @@
 const
 fs        = require('fs'),
 commander = require('commander'),
-moment    = require('moment'),
+moment    = require('moment-timezone'),
 sprintf   = require('sprintf'),
 strategy  = require('../lib/strategy'),
 db        = require('../lib/db'),
@@ -19,7 +19,8 @@ commander
   .option('-g, --config <file>', 'optional configuration JSON for strategy')
   .option('-f, --fee <percentage>', 'fee for trades as a percentage', Number.parseFloat, 0.0025)
   .option('-d, --date <date>', 'date and time to start trading', id, '2017-09-15T00:00:00-07')
-  .option('-u, --utc', 'print dates and times in UTC timezone instead of local')
+  .option('-u, --utc-offset <offset>', 'Print times using the given UTC offset instead of local time', Number.parseInt)
+  .option('-t, --timezone <timezone>', 'Print times using the given time zone (for better daylight savings handling)')
   .parse(process.argv)
 
 if (!commander.currency) {
@@ -34,7 +35,16 @@ let exchange      = commander.exchange
 let currencyPair  = commander.currency
 let d             = db[commander.exchange]
 let fee           = commander.fee
-let ts            = commander.utc ? ((m) => moment(m).utc().format()) : ((m) => moment(m).format())
+
+let ts
+if (typeof commander.utcOffset !== 'undefined') {
+  ts = ((m) => moment(m).utcOffset(commander.utcOffset).format())
+} else if (commander.timezone) {
+  ts = ((m) => moment(m).tz(commander.timezone).format())
+} else {
+  ts = ((m) => moment(m).format())
+}
+
 
 let config = {}
 if (commander.config) {
