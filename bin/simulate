@@ -2,6 +2,7 @@
 // -*- mode: js2; -*-
 
 const
+fs        = require('fs'),
 commander = require('commander'),
 moment    = require('moment'),
 sprintf   = require('sprintf'),
@@ -15,6 +16,7 @@ commander
   .option('-x, --exchange <name>', 'exchange to fill', id, 'bittrex')
   .option('-c, --currency <pair>', 'currency pair to fill')
   .option('-s, --strategy <name>', 'trading strategy to use', id, 'Example')
+  .option('-g, --config <file>', 'optional configuration JSON for strategy')
   .option('-f, --fee <percentage>', 'fee for trades as a percentage', Number.parseFloat, 0.0025)
   .option('-d, --date <date>', 'date and time to start trading', id, '2017-09-15T00:00:00-07')
   .option('-u, --utc', 'print dates and times in UTC timezone instead of local')
@@ -30,10 +32,20 @@ let startTime     = moment(commander.date)
 let endTime       = moment()
 let exchange      = commander.exchange
 let currencyPair  = commander.currency
-let s             = new StrategyClass({})
 let d             = db[commander.exchange]
 let fee           = commander.fee
 let ts            = commander.utc ? ((m) => moment(m).utc().format()) : ((m) => moment(m).format())
+
+let config = {}
+if (commander.config) {
+  try {
+    config = JSON.parse(fs.readFileSync(commander.config, 'utf8'))
+  } catch(err) {
+    console.warn(err)
+    process.exit(1)
+  }
+}
+let s = new StrategyClass(config)
 
 let [baseCurrency, currency] = currencyPair.split('-')
 let wallet           = {}
