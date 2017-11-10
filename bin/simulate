@@ -75,7 +75,8 @@ console.log(ts(startTime), sprintf("%8s", 'begin'), wallet)
     let newWallet = prices.reduce((w, p) => {
       let price   = p.close
       let time    = moment(p.time)
-      let action  = s.action(p.close, time)
+      p.time      = time
+      let action  = s.action(p)
       if (action) {
         let amount = action.amount
 
