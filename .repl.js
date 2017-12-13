@@ -28,7 +28,6 @@ global.ex       = require('./lib/ex')
 global.analysis = require('./lib/analysis')
 global.Bot      = require('./lib/bot')
 global.db       = require('./lib/db')
-global.ta       = require('./lib/db/ta')
 global.alert    = require('./lib/alert')
 
 global.bot = new Bot()
