@@ -70,6 +70,8 @@ console.log(ts(startTime), sprintf("%8s", 'begin'), wallet)
     let r0 = await s.init({ startTime, currencyPair, exchange })
 
     // load price data with timestamps as { close, time }
+    console.log(r0)
+    console.log(currencyPair, startTime, endTime)
     let prices = await d.prices(currencyPair, startTime, endTime)
 
     let newWallet = prices.reduce((w, p) => {
