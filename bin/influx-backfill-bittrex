@@ -1,0 +1,4 @@
+#!/bin/sh
+bin/markets | sort | while read m ; do
+  bin/influx-backfill -x bittrex -c $m
+done 2> /dev/null
